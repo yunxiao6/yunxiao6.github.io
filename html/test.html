@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+		    Image{width: 15px; height: 20px;}
+		</style>
+	</head>
+	<body >
+		<div id="div1">
+			<h6>画布</h6>
+			
+			<span id="text">
+				text
+			</span>
+			<canvas id="canvas" width="1080" height="1907" style="border: #000000 solid; width: 100%;">不支持画布</canvas>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var number=500;
+		var X=0;
+		var Y=0;
+		var text = document.getElementById("text");
+		function flower(x,y,Image,speed){// 定义一个  樱花 类 
+			this.x=x;  //位置
+			this.y=y;
+			this.img=Image;//图片
+			this.speed=speed;  //下落的速度
+		}
+		var imgs=new Array("../img/flower/flower%20(1).png","../img/flower/flower%20(2).png","../img/flower/flower%20(3).png","../img/flower/flower%20(4).png","../img/flower/flower%20(5).png","../img/flower/flower%20(6).png","../img/flower/flower%20(7).png");
+		var flowers=new Array();
+		var c=document.getElementById("canvas");
+		var  locations=new Array();
+		var cxt = c.getContext("2d");
+		for(var i=0;i<number;i++){
+			var x=Math.random()*1800+20;
+			var y=2000*Math.random();
+			var img=new Image();
+			var index=getIndex();
+			img.src=imgs[index];
+			var speed=Math.random()*0.5+0.5;
+			flowers[i]=new flower(x,y,img,speed);
+			}
+		function getIndex(){
+			var num=Math.floor(Math.random()*7);
+			return num;
+		}
+		function draw(){
+			cxt.clearRect(0,0,c.width,c.height);
+			for(var index=0;index<number;index++){
+				move(flowers[index]);
+				cxt.drawImage(flowers[index].img,flowers[index].x,flowers[index].y);
+				}
+			}
+		function move(f){
+			if(f.y>1080){
+				f.speed=Math.random()*0.5+0.5;
+				f.y= -1000*Math.random();
+			}
+			f.y+=f.speed;
+		}
+		window.setInterval("draw()",1);
+		</script>
+</html> 
